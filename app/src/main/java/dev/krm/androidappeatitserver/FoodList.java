@@ -59,8 +59,8 @@ public class FoodList extends AppCompatActivity {
 
     FirebaseRecyclerAdapter<Food, FoodViewHolder> adapter;
 
-    MaterialEditText edtName,edtDescription,edtPrice,edtDiscount;
-    Button btnSelect,btnUpload;
+    MaterialEditText edtName, edtDescription, edtPrice, edtDiscount;
+    Button btnSelect, btnUpload;
     Food newFood;
 
     Uri saveUri;
@@ -80,7 +80,7 @@ public class FoodList extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        rootLayout=(RelativeLayout)findViewById(R.id.rootLayout);
+        rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +197,7 @@ public class FoodList extends AppCompatActivity {
             });
         }
     }
+
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -204,6 +205,7 @@ public class FoodList extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), Common.PICK_IMAGE_REQUEST
         );
     }
+
     private void loadListFood(String categoryId) {
         adapter = new FirebaseRecyclerAdapter<Food, FoodViewHolder>(
                 Food.class,
@@ -242,10 +244,9 @@ public class FoodList extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        if (item.getTitle().equals(Common.UPDATE)){
-            showUpdateFoodDialog(adapter.getRef(item.getOrder()).getKey(),adapter.getItem(item.getOrder()));
-        }
-        else if(item.getTitle().equals(Common.DELETE)){
+        if (item.getTitle().equals(Common.UPDATE)) {
+            showUpdateFoodDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
+        } else if (item.getTitle().equals(Common.DELETE)) {
             deleteFood(adapter.getRef(item.getOrder()).getKey());
         }
         return super.onContextItemSelected(item);
@@ -298,13 +299,13 @@ public class FoodList extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
 
-                    item.setName(edtName.getText().toString());
-                    item.setPrice(edtPrice.getText().toString());
-                    item.setPrice(edtPrice.getText().toString());
-                    item.setDescription(edtDescription.getText().toString());
+                item.setName(edtName.getText().toString());
+                item.setPrice(edtPrice.getText().toString());
+                item.setPrice(edtPrice.getText().toString());
+                item.setDescription(edtDescription.getText().toString());
 
-                    foodList.child(key).setValue(item);
-                    Snackbar.make(rootLayout, "Food " + item.getName() + "was edited", Snackbar.LENGTH_SHORT).show();
+                foodList.child(key).setValue(item);
+                Snackbar.make(rootLayout, "Food " + item.getName() + "was edited", Snackbar.LENGTH_SHORT).show();
 
             }
         });
@@ -316,6 +317,7 @@ public class FoodList extends AppCompatActivity {
         });
         alertDialog.show();
     }
+
     private void changeImage(Food category) {
         if (saveUri != null) {
             ProgressDialog mDialog = new ProgressDialog(this);

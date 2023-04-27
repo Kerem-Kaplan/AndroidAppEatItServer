@@ -96,6 +96,16 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 showDialog();
             }
         });
+
+        binding.appBarHome.fabOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent orderIntent = new Intent(Home.this, OrderStatus.class);
+                startActivity(orderIntent);
+            }
+        });
+
+
         drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -260,6 +270,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        if(id==R.id.nav_orders){
+            Intent orders=new Intent(Home.this,OrderStatus.class);
+            startActivity(orders);
+        }
 
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
