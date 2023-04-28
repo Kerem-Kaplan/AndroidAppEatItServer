@@ -74,7 +74,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     DrawerLayout drawer;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,8 +239,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 menuViewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Intent foodList=new Intent(Home.this,FoodList.class);
-                        foodList.putExtra("CategoryId",adapter.getRef(position).getKey());
+                        Intent foodList = new Intent(Home.this, FoodList.class);
+                        foodList.putExtra("CategoryId", adapter.getRef(position).getKey());
                         startActivity(foodList);
                     }
                 });
@@ -270,8 +269,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id==R.id.nav_orders){
-            Intent orders=new Intent(Home.this,OrderStatus.class);
+        if (id == R.id.nav_orders) {
+            Intent orders = new Intent(Home.this, OrderStatus.class);
             startActivity(orders);
         }
 

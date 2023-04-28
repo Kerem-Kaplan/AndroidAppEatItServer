@@ -24,7 +24,7 @@ import info.hoang8f.widget.FButton;
 
 public class SignIn extends AppCompatActivity {
 
-    EditText edtPhone,edtPassword;
+    EditText edtPhone, edtPassword;
     Button btnSignIn;
 
     FirebaseDatabase database;
@@ -35,53 +35,50 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        edtPassword=(MaterialEditText)findViewById(R.id.edtPassword);
-        edtPhone=(MaterialEditText) findViewById(R.id.edtPhone);
-        btnSignIn=(Button) findViewById(R.id.btnSignIn);
+        edtPassword = (MaterialEditText) findViewById(R.id.edtPassword);
+        edtPhone = (MaterialEditText) findViewById(R.id.edtPhone);
+        btnSignIn = (Button) findViewById(R.id.btnSignIn);
 
-        database=FirebaseDatabase.getInstance();
-        users=database.getReference("User");
+        database = FirebaseDatabase.getInstance();
+        users = database.getReference("User");
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signInUser(edtPhone.getText().toString(),edtPassword.getText().toString());
+                signInUser(edtPhone.getText().toString(), edtPassword.getText().toString());
             }
         });
     }
 
     private void signInUser(String phone, String password) {
-        ProgressDialog mDialog=new ProgressDialog(SignIn.this);
+        ProgressDialog mDialog = new ProgressDialog(SignIn.this);
         mDialog.setMessage("Please waiting...");
         mDialog.show();
 
 
-        final String localPhone=phone;
-        final String localPassword=password;
+        final String localPhone = phone;
+        final String localPassword = password;
         users.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child(localPhone).exists()){
+                if (snapshot.child(localPhone).exists()) {
                     mDialog.dismiss();
-                    User user=snapshot.child(localPhone).getValue(User.class);
+                    User user = snapshot.child(localPhone).getValue(User.class);
                     user.setPhone(localPhone);
-                    
-                    if(Boolean.parseBoolean(user.getIsStaff())){
-                        if(user.getPassword().equals(localPassword)){
-                            Intent login=new Intent(SignIn.this,Home.class);
-                            Common.currentUser=user;
+
+                    if (Boolean.parseBoolean(user.getIsStaff())) {
+                        if (user.getPassword().equals(localPassword)) {
+                            Intent login = new Intent(SignIn.this, Home.class);
+                            Common.currentUser = user;
                             startActivity(login);
                             finish();
-                        }
-                        else{
+                        } else {
                             Toast.makeText(SignIn.this, "Wrong Password", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else{
+                    } else {
                         Toast.makeText(SignIn.this, "Please login with Staff account", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else{
+                } else {
                     mDialog.dismiss();
                     Toast.makeText(SignIn.this, "User not exist in Database", Toast.LENGTH_SHORT).show();
                 }

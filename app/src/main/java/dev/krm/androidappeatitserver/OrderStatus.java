@@ -84,9 +84,9 @@ public class OrderStatus extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
 
-        if(item.getIntent().equals(Common.UPDATE))
+        if(item.getTitle().equals(Common.UPDATE))
             showUpdateDialog(adapter.getRef(item.getOrder()).getKey(),adapter.getItem(item.getOrder()));
-        else if(item.getIntent().equals(Common.DELETE))
+        else if(item.getTitle().equals(Common.DELETE))
             deleteOrder(adapter.getRef(item.getOrder()).getKey());
         return super.onContextItemSelected(item);
 
@@ -105,10 +105,11 @@ public class OrderStatus extends AppCompatActivity {
         LayoutInflater inflater=this.getLayoutInflater();
         final View view=inflater.inflate(R.layout.update_order_layout,null);
 
-        spinner=(MaterialSpinner) findViewById(R.id.statusSpinner);
+        spinner=(MaterialSpinner) view.findViewById(R.id.statusSpinner);
         spinner.setItems("Placed","On my way","Shipped");
 
         alertDialog.setView(view);
+
         final String localKey=key;
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
