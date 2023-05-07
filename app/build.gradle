@@ -36,6 +36,7 @@ android {
 dependencies {
 
 
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
     constraints {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
             because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
@@ -70,6 +71,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:10.2.0'
     implementation 'com.google.firebase:firebase-storage:10.2.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
 
 
     implementation 'com.jaredrummler:material-spinner:1.1.0'
