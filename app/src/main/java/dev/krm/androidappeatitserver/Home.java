@@ -302,14 +302,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void deleteCategory(String key) {
-        DatabaseReference foods=database.getReference("Foods");
-        Query foodInCategory=foods.orderByChild("menuId").equalTo(key);
+        DatabaseReference foods = database.getReference("Foods");
+        Query foodInCategory = foods.orderByChild("menuId").equalTo(key);
 
         foodInCategory.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot postdataSnapshot:snapshot.getChildren()){
-                    postdataSnapshot.getRef().removeValue();
+                for (DataSnapshot postDataSnapshot : snapshot.getChildren()) {
+                    postDataSnapshot.getRef().removeValue();
                 }
             }
 

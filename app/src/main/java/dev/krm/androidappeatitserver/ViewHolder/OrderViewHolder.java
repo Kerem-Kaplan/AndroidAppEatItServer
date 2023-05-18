@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import dev.krm.androidappeatitserver.Interface.ItemClickListener;
 import dev.krm.androidappeatitserver.R;
 
-public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnCreateContextMenuListener {
+public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+        View.OnLongClickListener,
+        View.OnCreateContextMenuListener {
 
     public TextView txtOrderId, txtOrderStatus, txtOrderPhone, txtOrderAddress;
 
@@ -25,6 +27,7 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
         txtOrderPhone = (TextView) itemView.findViewById(R.id.order_phone);
 
         itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this);
         itemView.setOnCreateContextMenuListener(this);
     }
 
@@ -41,7 +44,13 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         menu.setHeaderTitle("Select The Action");
 
-        menu.add(0,0,getAdapterPosition(),"Update");
-        menu.add(0,1,getAdapterPosition(),"Delete");
+        menu.add(0, 0, getAdapterPosition(), "Update");
+        menu.add(0, 1, getAdapterPosition(), "Delete");
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        itemClickListener.onClick(v, getAdapterPosition(), false);
+        return true;
     }
 }

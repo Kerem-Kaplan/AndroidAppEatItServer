@@ -73,9 +73,16 @@ public class OrderStatus extends AppCompatActivity {
                 orderViewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Intent trackingOrder=new Intent(OrderStatus.this,TrackingOrder.class);
-                        Common.currentRequest=request;
-                        startActivity(trackingOrder);
+                        if (isLongClick) {
+                            Intent trackingOrder = new Intent(OrderStatus.this, TrackingOrder.class);
+                            Common.currentRequest = request;
+                            startActivity(trackingOrder);
+                        } else {
+                            Intent orderDetail = new Intent(OrderStatus.this, OrderDetail.class);
+                            Common.currentRequest = request;
+                            orderDetail.putExtra("orderId", adapter.getRef(position).getKey());
+                            startActivity(orderDetail);
+                        }
                     }
                 });
             }
@@ -87,9 +94,9 @@ public class OrderStatus extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
 
-        if(item.getTitle().equals(Common.UPDATE))
-            showUpdateDialog(adapter.getRef(item.getOrder()).getKey(),adapter.getItem(item.getOrder()));
-        else if(item.getTitle().equals(Common.DELETE))
+        if (item.getTitle().equals(Common.UPDATE))
+            showUpdateDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
+        else if (item.getTitle().equals(Common.DELETE))
             deleteOrder(adapter.getRef(item.getOrder()).getKey());
         return super.onContextItemSelected(item);
 
@@ -101,19 +108,19 @@ public class OrderStatus extends AppCompatActivity {
     }
 
     private void showUpdateDialog(String key, Request item) {
-        final AlertDialog.Builder alertDialog=new AlertDialog.Builder(OrderStatus.this);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(OrderStatus.this);
         alertDialog.setTitle("Update Order");
         alertDialog.setMessage("Please choose status");
 
-        LayoutInflater inflater=this.getLayoutInflater();
-        final View view=inflater.inflate(R.layout.update_order_layout,null);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View view = inflater.inflate(R.layout.update_order_layout, null);
 
-        spinner=(MaterialSpinner) view.findViewById(R.id.statusSpinner);
-        spinner.setItems("Placed","On my way","Shipped");
+        spinner = (MaterialSpinner) view.findViewById(R.id.statusSpinner);
+        spinner.setItems("Placed", "On my way", "Shipped");
 
         alertDialog.setView(view);
 
-        final String localKey=key;
+        final String localKey = key;
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
