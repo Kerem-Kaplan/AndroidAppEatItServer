@@ -2,6 +2,7 @@ package dev.krm.androidappeatitserver.ViewHolder;
 
 import android.view.ContextMenu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import dev.krm.androidappeatitserver.Interface.ItemClickListener;
 import dev.krm.androidappeatitserver.R;
 
-public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
-        View.OnLongClickListener,
-        View.OnCreateContextMenuListener {
+public class OrderViewHolder extends RecyclerView.ViewHolder {
 
     public TextView txtOrderId, txtOrderStatus, txtOrderPhone, txtOrderAddress;
 
-    private ItemClickListener itemClickListener;
+    public Button btnEdit,btnRemove,btnDirection,btnDetail;
+
+
 
     public OrderViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -26,31 +27,13 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
         txtOrderStatus = (TextView) itemView.findViewById(R.id.order_status);
         txtOrderPhone = (TextView) itemView.findViewById(R.id.order_phone);
 
-        itemView.setOnClickListener(this);
-        itemView.setOnLongClickListener(this);
-        itemView.setOnCreateContextMenuListener(this);
+        btnEdit=(Button)itemView.findViewById(R.id.btnEdit);
+        btnDetail=(Button)itemView.findViewById(R.id.btnDetail);
+        btnDirection=(Button)itemView.findViewById(R.id.btnDirection);
+        btnRemove=(Button)itemView.findViewById(R.id.btnRemove);
+
+
     }
 
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
 
-    @Override
-    public void onClick(View v) {
-        itemClickListener.onClick(v, getAdapterPosition(), false);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Select The Action");
-
-        menu.add(0, 0, getAdapterPosition(), "Update");
-        menu.add(0, 1, getAdapterPosition(), "Delete");
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        itemClickListener.onClick(v, getAdapterPosition(), false);
-        return true;
-    }
 }
